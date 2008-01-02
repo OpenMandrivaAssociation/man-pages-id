@@ -10,6 +10,7 @@ Release: %{release}
 License: GPL
 Group: System/Internationalization
 Source: id-man.tar.bz2
+Buildroot: %_tmppath/%name-root
 BuildRequires: man => 1.5j-8mdk
 Requires: locales-%LANG, man => 1.5j-8mdk
 Autoreq: false
