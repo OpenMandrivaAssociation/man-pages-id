@@ -1,7 +1,7 @@
 %define LANG id
 %define name man-pages-%LANG
 %define version 0.1
-%define release %mkrel 15
+%define release %mkrel 16
 
 Summary: Man pages in Indonesian language
 Name: %{name}
