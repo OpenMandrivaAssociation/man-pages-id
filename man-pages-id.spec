@@ -1,5 +1,5 @@
-%define LANG id
-%define name man-pages-%LANG
+%define LNG id
+%define name man-pages-%LNG
 %define version 0.1
 %define release %mkrel 16
 
@@ -10,9 +10,9 @@ Release: %{release}
 License: GPL
 Group: System/Internationalization
 Source: id-man.tar.bz2
-Buildroot: %_tmppath/%name-root
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: man => 1.5j-8mdk
-Requires: locales-%LANG, man => 1.5j-8mdk
+Requires: locales-%LNG, man => 1.5j-8mdk
 Autoreq: false
 BuildArch: noarch
 
@@ -24,37 +24,38 @@ A collection of man pages for Linux in Indonesian language
 %build
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%_mandir/%LANG/
-tar jxf %{SOURCE0} -C $RPM_BUILD_ROOT/%_mandir/%LANG/
+rm -rf %{buildroot}
+mkdir -p %{buildroot}/%_mandir/%LNG/
+tar jxf %{SOURCE0} -C %{buildroot}/%_mandir/%LNG/
 
-LANG=%LANG DESTDIR=$RPM_BUILD_ROOT /usr/sbin/makewhatis $RPM_BUILD_ROOT/%_mandir/%LANG
+LANG=%LNG DESTDIR=%{buildroot} %{_sbindir}/makewhatis %{buildroot}/%_mandir/%LNG
 
-mkdir -p $RPM_BUILD_ROOT/etc/cron.weekly
-cat > $RPM_BUILD_ROOT/etc/cron.weekly/makewhatis-%LANG.cron << EOF
+mkdir -p %{buildroot}%{_sysconfdir}/cron.weekly
+cat > %{buildroot}%{_sysconfdir}/cron.weekly/makewhatis-%LNG.cron << EOF
 #!/bin/bash
-LANG=%LANG /usr/sbin/makewhatis %_mandir/%LANG
+LANG=%LNG %{_sbindir}/makewhatis %_mandir/%LNG
 exit 0
 EOF
-chmod a+x $RPM_BUILD_ROOT/etc/cron.weekly/makewhatis-%LANG.cron
+chmod a+x %{buildroot}%{_sysconfdir}/cron.weekly/makewhatis-%LNG.cron
 
-mkdir -p  $RPM_BUILD_ROOT/var/cache/man/%LANG
+mkdir -p  %{buildroot}/var/cache/man/%LNG
 
-touch $RPM_BUILD_ROOT/var/cache/man/%LNG/whatis
+touch %{buildroot}/var/cache/man/%LNG/whatis
 
 %post
 %create_ghostfile /var/cache/man/%LNG/whatis root root 644
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(644,root,man,755)
 #%doc CHANGES README* COPYRIGHT
-%dir %_mandir/%LANG
-%dir /var/cache/man/%LANG
+%dir %_mandir/%LNG
+%dir /var/cache/man/%LNG
 %config(noreplace) /var/cache/man/%LNG/whatis
 %ghost %config(noreplace) /var/cache/man/%LNG/whatis
-%_mandir/%LANG/man*
-%config(noreplace) %attr(755,root,root)/etc/cron.weekly/makewhatis-%LANG.cron
+%_mandir/%LNG/man*
+%_mandir/%LNG/whatis
+%config(noreplace) %attr(755,root,root) %{_sysconfdir}/cron.weekly/makewhatis-%LNG.cron
 
