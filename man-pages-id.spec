@@ -1,7 +1,7 @@
 %define LNG id
 %define name man-pages-%LNG
 %define version 0.1
-%define release %mkrel 17
+%define release %mkrel 18
 
 Summary: Man pages in Indonesian language
 Name: %{name}
