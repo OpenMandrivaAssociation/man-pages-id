@@ -3,7 +3,7 @@
 Summary:	Man pages in Indonesian language
 Name:		man-pages-%{LNG}
 Version:	0.1
-Release:	19
+Release:	20
 License:	GPL
 Group:		System/Internationalization
 Source:		id-man.tar.bz2
@@ -25,12 +25,12 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_mandir}/%{LNG}/
 tar jxf %{SOURCE0} -C %{buildroot}%{_mandir}/%{LNG}/
 
-LANG=%LNG DESTDIR=%{buildroot} %{_sbindir}/makewhatis %{buildroot}/%{_mandir}/%{LNG}
+LANG=%LNG DESTDIR=%{buildroot} %{_bindir}/mandb %{buildroot}/%{_mandir}/%{LNG}
 
 mkdir -p %{buildroot}%{_sysconfdir}/cron.weekly
 cat > %{buildroot}%{_sysconfdir}/cron.weekly/makewhatis-%{LNG}.cron << EOF
 #!/bin/bash
-LANG=%{LNG} %{_sbindir}/makewhatis %{_mandir}/%{LNG}
+LANG=%{LNG} %{_bindir}/mandb %{_mandir}/%{LNG}
 exit 0
 EOF
 chmod a+x %{buildroot}%{_sysconfdir}/cron.weekly/makewhatis-%{LNG}.cron
