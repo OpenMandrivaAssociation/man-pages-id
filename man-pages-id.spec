@@ -3,7 +3,7 @@
 Summary:	Man pages in Indonesian language
 Name:		man-pages-%{LNG}
 Version:	0.1
-Release:	25
+Release:	26
 License:	GPLv2
 Group:		System/Internationalization
 Source0:	id-man.tar.bz2
