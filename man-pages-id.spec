@@ -3,7 +3,7 @@
 Summary:	Man pages in Indonesian language
 Name:		man-pages-%{LNG}
 Version:	0.1
-Release:	29
+Release:	30
 License:	GPLv2
 Group:		System/Internationalization
 Source0:	id-man.tar.bz2
@@ -12,6 +12,7 @@ BuildRequires:	man
 Requires:	locales-%{LNG}
 Requires:	man
 Autoreq:	false
+Conflicts:	filesystem < 3.0-17
 
 %description
 A collection of man pages for Linux in Indonesian language
@@ -42,12 +43,10 @@ touch %{buildroot}/var/cache/man/%{LNG}/whatis
 %create_ghostfile /var/cache/man/%{LNG}/whatis root root 644
 
 %files
-%dir %{_mandir}/%{LNG}
 %dir /var/cache/man/%{LNG}
 %ghost %config(noreplace) /var/cache/man/%{LNG}/whatis
 %{_mandir}/%{LNG}/man*
 %{_mandir}/%{LNG}/cat*
-%{_mandir}/%{LNG}/CACHEDIR.TAG*
 %{_mandir}/%{LNG}/index.db*
 %config(noreplace) %attr(755,root,root) %{_sysconfdir}/cron.weekly/makewhatis-%{LNG}.cron
 
